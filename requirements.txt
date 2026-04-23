@@ -1,0 +1,4 @@
+# Ce fichier liste l'ensemble des dependance du projet.
+# l'ensemble des dependance sont installable via pip:
+# pip install -r requirements.txt
+mysql-connector-python
