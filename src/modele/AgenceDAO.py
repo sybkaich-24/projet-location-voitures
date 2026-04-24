@@ -49,17 +49,17 @@ class AgenceDAO:
         except Error as e:
             print(f"Error while connecting to MySQL: {e}")
             return None
-        
-    def create_agence(self, nom, adresse):
+
+    def create_agence(self, nom_agence, adresse, ville, code_postal, telephone):
         """Crée une nouvelle agence"""
 
         try:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "INSERT INTO agence (nom, adresse) VALUES (%s, %s)"
+                    query = "INSERT INTO agence (nom_agence, adresse, ville, code_postal, telephone) VALUES (%s, %s, %s, %s, %s)"
                     # Construction du tuple de parametres pour la requete
-                    values = (nom, adresse)
+                    values = (nom_agence, adresse, ville, code_postal, telephone)
                     # Execution de la requete avec les parametres
                     cursor.execute(query, values)
                     # Validation de la transaction pour rendre definitif les modifications
@@ -70,18 +70,36 @@ class AgenceDAO:
             print(f"Error while connecting to MySQL: {e}")
             return False
     
-    def update_agence(self, id_agence, nom, adresse):
+    def update_agence(self, id_agence, nom=None, adresse=None, ville=None, code_postal=None, telephone=None):
         """Met à jour une agence"""
 
         try:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "UPDATE agence SET nom = %s, adresse = %s WHERE id_agence = %s"
+                    query = "UPDATE agence SET "
                     # Construction du tuple de parametres pour la requete
-                    values = (nom, adresse, id_agence)
+                    values = []
+                    if nom is not None:
+                        query += "nom = %s, "
+                        values.append(nom)
+                    if adresse is not None:
+                        query += "adresse = %s, "
+                        values.append(adresse)
+                    if ville is not None:
+                        query += "ville = %s, "
+                        values.append(ville)
+                    if code_postal is not None:
+                        query += "code_postal = %s, "
+                        values.append(code_postal)
+                    if telephone is not None:
+                        query += "telephone = %s, "
+                        values.append(telephone)
+                    query = query.rstrip(", ")  # Remove the trailing comma and space
+                    query += " WHERE id_agence = %s"
+                    values.append(id_agence)
                     # Execution de la requete avec les parametres
-                    cursor.execute(query, values)
+                    cursor.execute(query, tuple(values))
                     # Validation de la transaction pour rendre definitif les modifications
                     connection.commit()
                     # Retour du resultat

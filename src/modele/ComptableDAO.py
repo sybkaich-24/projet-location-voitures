@@ -11,16 +11,16 @@ class ComptableDAO:
             'port': 3307 # Il faut s'assurer que le port de docker est le meme 
         }
 
-    def get_comptable_by_id(self, id_comptable):
+    def get_comptable_by_id(self, id_employe):
         """Récupère un comptable par son ID"""
 
         try:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM comptable WHERE id_comptable = %s"
+                    query = "SELECT * FROM comptable WHERE id_employe = %s"
                     # Parametres
-                    value = (id_comptable,)
+                    value = (id_employe,)
                     # Execution 
                     cursor.execute(query, value)
                     # Resultat
@@ -31,4 +31,129 @@ class ComptableDAO:
             print(f"Error while connecting to MySQL: {e}")
             return None
         
+    def get_all_comptables(self):
+        """Récupère tous les comptables"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT * FROM comptable"
+                    # Execution 
+                    cursor.execute(query)
+                    # Resultat
+                    result = cursor.fetchall()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
         
+    def get_salaire_comptable_by_id(self, id_employe):
+        """Récupère le salaire d'un employe par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT salaire FROM comptable WHERE id_employe = %s"
+                    # Parametres
+                    value = (id_employe,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchone()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_description_role_comptable_by_id(self, id_employe):
+        """Récupère la description du role d'un comptable par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT description_role FROM comptable WHERE id_employe = %s"
+                    # Parametres
+                    value = (id_employe,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchone()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def create_comptable(self, id_employe, description_role, salaire):
+        """Crée un nouveau comptable"""
+        
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "INSERT INTO comptable (id_employe, description_role, salaire) VALUES (%s, %s, %s)"
+                    # Parametres
+                    values = (id_employe, description_role, salaire)
+                    # Execution 
+                    cursor.execute(query, values)
+                    # Commit pour sauvegarder les changements
+                    connection.commit()
+                    # Retour
+                    return True
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return False
+        
+    def update_comptable(self, id_employe, description_role=None, salaire=None):
+        """Met à jour un comptable existant"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête
+                    query = "UPDATE comptable SET "
+                    # Parametres
+                    values = []
+                    if description_role is not None:
+                        query += "description_role = %s, "
+                        values.append(description_role)
+                    if salaire is not None:
+                        query += "salaire = %s, "
+                        values.append(salaire)
+                    query = query.rstrip(", ")  # Remove the trailing comma and space
+                    query += " WHERE id_employe = %s"
+                    values.append(id_employe)
+                    # Execution
+                    cursor.execute(query, tuple(values))
+                    # Commit pour sauvegarder les changements
+                    connection.commit()
+                    # Retour
+                    return True
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return False
+        
+    def delete_comptable(self, id_employe):
+        """Supprime le profile comptable d'un employe"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête
+                    query = "DELETE FROM comptable WHERE id_employe = %s"
+                    # Parametres
+                    value = (id_employe,)
+                    # Execution
+                    cursor.execute(query, value)
+                    # Commit pour sauvegarder les changements
+                    connection.commit()
+                    # Retour
+                    return True
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return False
