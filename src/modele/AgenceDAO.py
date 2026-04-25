@@ -2,6 +2,17 @@ import mysql.connector
 from mysql.connector import Error
 
 class AgenceDAO:
+    """
+    Classe d'acces et de gestion des agences dans la base de données DAO
+
+    id_agence INT AUTO_INCREMENT,
+    nom_agence VARCHAR(100) NOT NULL,
+    adresse VARCHAR(255) NOT NULL,
+    ville VARCHAR(100) NOT NULL,
+    code_postal VARCHAR(20) NOT NULL,
+    telephone VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id_agence)
+    """
     def __init__(self, host, user, password, database):
         self.config = {
             'host': host,
@@ -50,6 +61,86 @@ class AgenceDAO:
             print(f"Error while connecting to MySQL: {e}")
             return None
 
+    def get_nom_agence_by_id(self, id_agence):
+        """Récupère le nom d'une agence par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
+                    query = "SELECT nom_agence FROM agence WHERE id_agence = %s"
+                    # Construction du tuple de parametres pour la requete
+                    value = (id_agence,)
+                    # Execution de la requete avec les parametres
+                    cursor.execute(query, value)
+                    # Récupération du resultat
+                    result = cursor.fetchone()
+                    # Retour du resultat
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_adresse_agence_by_id(self, id_agence):
+        """Récupère l'adresse d'une agence par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
+                    query = "SELECT adresse FROM agence WHERE id_agence = %s"
+                    # Construction du tuple de parametres pour la requete
+                    value = (id_agence,)
+                    # Execution de la requete avec les parametres
+                    cursor.execute(query, value)
+                    # Récupération du resultat
+                    result = cursor.fetchone()
+                    # Retour du resultat
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_ville_agence_by_id(self, id_agence):
+        """Récupère la ville d'une agence par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
+                    query = "SELECT ville FROM agence WHERE id_agence = %s"
+                    # Construction du tuple de parametres pour la requete
+                    value = (id_agence,)
+                    # Execution de la requete avec les parametres
+                    cursor.execute(query, value)
+                    # Récupération du resultat
+                    result = cursor.fetchone()
+                    # Retour du resultat
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_agences_by_ville(self, ville):
+        """Récupère toutes les agences d'une ville"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
+                    query = "SELECT * FROM agence WHERE ville = %s"
+                    # Construction du tuple de parametres pour la requete
+                    value = (ville,)
+                    # Execution de la requete avec les parametres
+                    cursor.execute(query, value)
+                    # Récupération du resultat
+                    result = cursor.fetchall()
+                    # Retour du resultat
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+
     def create_agence(self, nom_agence, adresse, ville, code_postal, telephone):
         """Crée une nouvelle agence"""
 
@@ -65,10 +156,10 @@ class AgenceDAO:
                     # Validation de la transaction pour rendre definitif les modifications
                     connection.commit()
                     # Retour du resultat
-                    return True
-        except Error as e:
+                    return cursor.lastrowid
+        except Error as e:  
             print(f"Error while connecting to MySQL: {e}")
-            return False
+            return None
     
     def update_agence(self, id_agence, nom=None, adresse=None, ville=None, code_postal=None, telephone=None):
         """Met à jour une agence"""
@@ -77,29 +168,11 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "UPDATE agence SET "
+                    query = "UPDATE agence SET nom = COALESCE(%s, nom), adresse = COALESCE(%s, adresse), ville = COALESCE(%s, ville), code_postal = COALESCE(%s, code_postal), telephone = COALESCE(%s, telephone) WHERE id_agence = %s"
                     # Construction du tuple de parametres pour la requete
-                    values = []
-                    if nom is not None:
-                        query += "nom = %s, "
-                        values.append(nom)
-                    if adresse is not None:
-                        query += "adresse = %s, "
-                        values.append(adresse)
-                    if ville is not None:
-                        query += "ville = %s, "
-                        values.append(ville)
-                    if code_postal is not None:
-                        query += "code_postal = %s, "
-                        values.append(code_postal)
-                    if telephone is not None:
-                        query += "telephone = %s, "
-                        values.append(telephone)
-                    query = query.rstrip(", ")  # Remove the trailing comma and space
-                    query += " WHERE id_agence = %s"
-                    values.append(id_agence)
+                    values = (nom, adresse, ville, code_postal, telephone, id_agence)
                     # Execution de la requete avec les parametres
-                    cursor.execute(query, tuple(values))
+                    cursor.execute(query, values)
                     # Validation de la transaction pour rendre definitif les modifications
                     connection.commit()
                     # Retour du resultat

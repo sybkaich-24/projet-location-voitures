@@ -2,6 +2,16 @@ import mysql.connector
 from mysql.connector import Error
 
 class CategorieVehiculeDAO:
+    """
+    Classe d'acces et de gestion des catégories de véhicules dans la base de données DAO
+
+    id_categorie INT AUTO_INCREMENT,
+    nom_categorie VARCHAR(50) NOT NULL,
+    description TEXT,
+    tarif_base DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (id_categorie),
+    UNIQUE (nom_categorie)
+    """
     def __init__(self, host, user, password, database):
         self.config = {
             'host': host,
@@ -124,10 +134,10 @@ class CategorieVehiculeDAO:
                     # Commit pour sauvegarder les changements
                     connection.commit()
                     # Retour
-                    return True
+                    return cursor.lastrowid
         except Error as e:
             print(f"Error while connecting to MySQL: {e}")
-            return False
+            return None
         
     def update_categorie_vehicule(self, id_categorie, nom=None, description=None, tarif_base=None):
         """Met à jour une catégorie de véhicule"""
@@ -136,23 +146,11 @@ class CategorieVehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "UPDATE categorie_vehicule SET "
+                    query = "UPDATE categorie_vehicule SET nom = COALESCE(%s, nom), description = COALESCE(%s, description), tarif_base = COALESCE(%s, tarif_base) WHERE id_categorie = %s"
                     # Parametres
-                    values = []
-                    if nom is not None:
-                        query += "nom = %s, "
-                        values.append(nom)
-                    if description is not None:
-                        query += "description = %s, "
-                        values.append(description)
-                    if tarif_base is not None:
-                        query += "tarif_base = %s, "
-                        values.append(tarif_base)
-                    query = query.rstrip(", ")  # Remove the trailing comma and space
-                    query += " WHERE id_categorie = %s"
-                    values.append(id_categorie)
+                    values = (nom, description, tarif_base, id_categorie)
                     # Execution 
-                    cursor.execute(query, tuple(values))
+                    cursor.execute(query, values)
                     # Commit pour sauvegarder les changements
                     connection.commit()
                     # Retour

@@ -2,6 +2,18 @@ import mysql.connector
 from mysql.connector import Error
 
 class FraisSupplementaireDAO:
+    """
+    Classe d'acces et de gestion des frais supplémentaires dans la base de données DAO
+
+    id_frais INT AUTO_INCREMENT,
+    type_frais VARCHAR(100) NOT NULL,
+    montant DECIMAL(10,2) NOT NULL,
+    description TEXT,
+    date_frais DATE NOT NULL,
+    id_location INT NOT NULL,
+    PRIMARY KEY (id_frais),
+    FOREIGN KEY (id_location) REFERENCES Location(id_location)
+    """
     def __init__(self, host, user, password, database):
         self.config = {
             'host': host,
@@ -103,10 +115,10 @@ class FraisSupplementaireDAO:
                     cursor.execute(query, values)
                     connection.commit()
                     # Retour
-                    return True
+                    return cursor.lastrowid
         except Error as e:
             print(f"Error while connecting to MySQL: {e}")
-            return False
+            return None
         
     def update_frais_supplementaires(self, id_frais_supplementaires, type_frais=None, montant=None, description=None, date_frais=None, id_location=None):
         """Met à jour un frais supplémentaire"""
@@ -115,30 +127,11 @@ class FraisSupplementaireDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requête de mise à jour
-                    query = "UPDATE frais_supplementaires SET "
-                    values = []
-                    if type_frais is not None:
-                        query += "type_frais = %s, "
-                        values.append(type_frais)
-                    if montant is not None:
-                        query += "montant = %s, "
-                        values.append(montant)
-                    if description is not None:
-                        query += "description = %s, "
-                        values.append(description)
-                    if date_frais is not None:
-                        query += "date_frais = %s, "
-                        values.append(date_frais)
-                    if id_location is not None:
-                        query += "id_location = %s, "
-                        values.append(id_location)
-                    
-                    # Retirer la dernière virgule et ajouter la condition WHERE
-                    query = query.rstrip(", ") + " WHERE id_frais_supplementaires = %s"
-                    values.append(id_frais_supplementaires)
-
+                    query = "UPDATE frais_supplementaires SET type_frais = COALESCE(%s, type_frais), montant = COALESCE(%s, montant), description = COALESCE(%s, description), date_frais = COALESCE(%s, date_frais), id_location = COALESCE(%s, id_location) WHERE id_frais_supplementaires = %s"
+                    # Parametres
+                    values = (type_frais, montant, description, date_frais, id_location, id_frais_supplementaires)
                     # Execution 
-                    cursor.execute(query, tuple(values))
+                    cursor.execute(query, values)
                     connection.commit()
                     # Retour
                     return True

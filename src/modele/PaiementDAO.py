@@ -2,6 +2,18 @@ import mysql.connector
 from mysql.connector import Error
 
 class PaiementDAO:
+    """
+    Classe d'acces et de gestion des paiements dans la base de données DAO
+    
+    id_paiement INT AUTO_INCREMENT,
+    date_paiement DATE NOT NULL,
+    montant DECIMAL(10,2) NOT NULL,
+    moyen_paiement VARCHAR(50) NOT NULL,
+    statut_paiement VARCHAR(50) NOT NULL,
+    id_location INT NOT NULL,
+    PRIMARY KEY (id_paiement),
+    FOREIGN KEY (id_location) REFERENCES Location(id_location)
+    """
     def __init__(self, host, user, password, database):
         self.config = {
             'host': host,
@@ -30,3 +42,185 @@ class PaiementDAO:
         except Error as e:
             print(f"Error while connecting to MySQL: {e}")
             return None
+        
+    def get_paiement_id_by_id_location(self, id_location):
+        """Récupère un paiement par l'ID de la location"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT id_paiement FROM paiement WHERE id_location = %s"
+                    # Parametres
+                    value = (id_location,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchone()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+    
+        
+    def get_all_paiements(self):
+        """Récupère tous les paiements"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT * FROM paiement"
+                    # Execution 
+                    cursor.execute(query)
+                    # Resultat
+                    result = cursor.fetchall()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_paiement_by_id_location(self, id_location):
+        """Récupère tous les paiements d'une location par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT * FROM paiement WHERE id_location = %s"
+                    # Parametres
+                    value = (id_location,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchall()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_statut_paiement_by_id(self, id_paiement):
+        """Récupère le statut d'un paiement par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT statut_paiement FROM paiement WHERE id_paiement = %s"
+                    # Parametres
+                    value = (id_paiement,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchone()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_moyen_paiement_by_id(self, id_paiement):
+        """Récupère le moyen de paiement d'un paiement par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT moyen_paiement FROM paiement WHERE id_paiement = %s"
+                    # Parametres
+                    value = (id_paiement,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchone()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_montant_paiement_by_id(self, id_paiement):
+        """Récupère le montant d'un paiement par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT montant FROM paiement WHERE id_paiement = %s"
+                    # Parametres
+                    value = (id_paiement,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchone()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def create_paiement(self, date_paiement, montant, moyen_paiement, statut_paiement, id_location):
+        """Crée un nouveau paiement"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "INSERT INTO paiement (date_paiement, montant, moyen_paiement, statut_paiement, id_location) VALUES (%s, %s, %s, %s, %s)"
+                    # Parametres
+                    values = (date_paiement, montant, moyen_paiement, statut_paiement, id_location)
+                    # Execution 
+                    cursor.execute(query, values)
+                    connection.commit()
+                    # Retour
+                    return cursor.lastrowid
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def update_paiement(self, id_paiement, date_paiement=None, montant=None, moyen_paiement=None, statut_paiement=None):
+        """Met à jour un paiement"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "UPDATE paiement SET date_paiement = COALESCE(%s, date_paiement), montant = COALESCE(%s, montant), moyen_paiement = COALESCE(%s, moyen_paiement), statut_paiement = COALESCE(%s, statut_paiement) WHERE id_paiement = %s"
+                    # Parametres
+                    values = (date_paiement, montant, moyen_paiement, statut_paiement, id_paiement)
+                    # Execution 
+                    cursor.execute(query, values)
+                    # Commit pour sauvegarder les changements
+                    connection.commit()
+                    # Resultat
+                    result = cursor.rowcount
+                    # Retour
+                    return True
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return False
+        
+    def delete_paiement(self, id_paiement):
+        """Supprime un paiement"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "DELETE FROM paiement WHERE id_paiement = %s"
+                    # Parametres
+                    value = (id_paiement,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Commit pour sauvegarder les changements
+                    connection.commit()
+                    # Resultat
+                    result = cursor.rowcount
+                    # Retour
+                    return True
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return False

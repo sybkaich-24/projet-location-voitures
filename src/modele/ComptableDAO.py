@@ -2,6 +2,17 @@ import mysql.connector
 from mysql.connector import Error
 
 class ComptableDAO:
+    """
+    Classe d'acces et de gestion des comptables dans la base de données DAO
+    
+    id_employe INT,
+    description_role TEXT,
+    salaire DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (id_employe),
+    FOREIGN KEY (id_employe) REFERENCES Employe(id_employe)
+
+    Herite de l'entite Employe
+    """
     def __init__(self, host, user, password, database):
         self.config = {
             'host': host,
@@ -104,10 +115,10 @@ class ComptableDAO:
                     # Commit pour sauvegarder les changements
                     connection.commit()
                     # Retour
-                    return True
+                    return cursor.lastrowid
         except Error as e:
             print(f"Error while connecting to MySQL: {e}")
-            return False
+            return None
         
     def update_comptable(self, id_employe, description_role=None, salaire=None):
         """Met à jour un comptable existant"""
@@ -116,20 +127,11 @@ class ComptableDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête
-                    query = "UPDATE comptable SET "
+                    query = "UPDATE comptable SET description_role = COALESCE(%s, description_role), salaire = COALESCE(%s, salaire) WHERE id_employe = %s"
                     # Parametres
-                    values = []
-                    if description_role is not None:
-                        query += "description_role = %s, "
-                        values.append(description_role)
-                    if salaire is not None:
-                        query += "salaire = %s, "
-                        values.append(salaire)
-                    query = query.rstrip(", ")  # Remove the trailing comma and space
-                    query += " WHERE id_employe = %s"
-                    values.append(id_employe)
+                    values = (description_role, salaire, id_employe)
                     # Execution
-                    cursor.execute(query, tuple(values))
+                    cursor.execute(query, values)
                     # Commit pour sauvegarder les changements
                     connection.commit()
                     # Retour

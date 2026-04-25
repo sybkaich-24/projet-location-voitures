@@ -2,6 +2,22 @@ import mysql.connector
 from mysql.connector import Error
 
 class ClientDAO:
+    """
+    Classe d'acces et de gestion des clients dans la base de données DAO
+
+    id_client INT AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    telephone VARCHAR(20),
+    numero_permis VARCHAR(50) NOT NULL,
+    date_inscription DATE NOT NULL,
+    est_anonymise BOOLEAN NOT NULL DEFAULT FALSE,
+    date_desinscription DATE,
+    PRIMARY KEY (id_client),
+    UNIQUE (email),
+    UNIQUE (numero_permis)
+    """
     def __init__(self, host, user, password, database):
         self.config = {
             'host': host,
@@ -89,6 +105,46 @@ class ClientDAO:
             print(f"Error while connecting to MySQL: {e}")
             return None
         
+    def get_is_anonymise_client_by_id(self, id_client):
+        """Récupère si un client est anonyme par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT est_anonymise FROM client WHERE id_client = %s"
+                    # Parametres
+                    value = (id_client,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchone()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_numero_permis_client_by_id(self, id_client):
+        """Récupère le numéro de permis d'un client par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT numero_permis FROM client WHERE id_client = %s"
+                    # Parametres
+                    value = (id_client,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchone()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
     def create_client(self, nom, prenom, email, telephone, numero_permis):
         """Crée un nouveau client"""
 
@@ -116,35 +172,18 @@ class ClientDAO:
                 with mysql.connector.connect(**self.config) as connection:
                     with connection.cursor() as cursor:
                         # Construction de la requete de mise à jour avec les champs à mettre à jour
-                        query = "UPDATE client SET "
-                        values = []
-                        if nom is not None:
-                            query += "nom = %s, "
-                            values.append(nom)
-                        if prenom is not None:
-                            query += "prenom = %s, "
-                            values.append(prenom)
-                        if email is not None:
-                            query += "email = %s, "
-                            values.append(email)
-                        if telephone is not None:
-                            query += "telephone = %s, "
-                            values.append(telephone)
-                        if numero_permis is not None:
-                            query += "numero_permis = %s, "
-                            values.append(numero_permis)
-                        # Retirer la virgule finale et ajouter la clause WHERE
-                        query = query.rstrip(", ") + " WHERE id_client = %s"
-                        values.append(id_client)
+                        query = "UPDATE client SET nom = COALESCE(%s, nom), prenom = COALESCE(%s, prenom), email = COALESCE(%s, email), telephone = COALESCE(%s, telephone), numero_permis = COALESCE(%s, numero_permis) WHERE id_client = %s"
+                        # Parametres
+                        values = (nom, prenom, email, telephone, numero_permis, id_client)
                         # Execution de la requete avec les parametres
-                        cursor.execute(query, tuple(values))
+                        cursor.execute(query, values)
                         # Commit des changements
                         connection.commit()
                         # Retour 
-                        return True
+                        return cursor.lastrowid
             except Error as e:
                 print(f"Error while connecting to MySQL: {e}")
-                return False
+                return None
             
     def desinscription_client_by_id(self, id_client):
         """Désinscrit un client en le rendant anonyme et en changant sa date de désinscription"""

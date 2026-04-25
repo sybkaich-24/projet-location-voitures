@@ -2,6 +2,20 @@ import mysql.connector
 from mysql.connector import Error
 
 class EmployeDAO:
+    """
+    Classe d'acces et de gestion des employés dans la base de données DAO
+    
+    id_employe INT AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    telephone VARCHAR(20),
+    date_embauche DATE NOT NULL,
+    id_agence INT NOT NULL,
+    PRIMARY KEY (id_employe),
+    UNIQUE (email),
+    FOREIGN KEY (id_agence) REFERENCES Agence(id_agence)
+    """
     def __init__(self, host, user, password, database):
         self.config = {
             'host': host,
@@ -69,6 +83,66 @@ class EmployeDAO:
             print(f"Error while connecting to MySQL: {e}")
             return None
         
+    def get_employes_by_id_agence(self, id_agence):
+        """Récupère tous les employés d'une agence par l'ID de l'agence"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT * FROM employe WHERE id_agence = %s"
+                    # Parametres
+                    value = (id_agence,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchall()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_id_employes_by_id_agence(self, id_agence):
+        """Récupère les ID de tous les employés d'une agence par l'ID de l'agence"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT id_employe FROM employe WHERE id_agence = %s"
+                    # Parametres
+                    value = (id_agence,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchall()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
+    def get_id_agence_by_id_employe(self, id_employe):
+        """Récupère l'ID de l'agence d'un employé par son ID"""
+
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Requête 
+                    query = "SELECT id_agence FROM employe WHERE id_employe = %s"
+                    # Parametres
+                    value = (id_employe,)
+                    # Execution 
+                    cursor.execute(query, value)
+                    # Resultat
+                    result = cursor.fetchone()
+                    # Retour
+                    return result
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
+        
     def create_employe(self, nom, prenom, email, telephone, date_embauche, id_agence):
         """Crée un nouvel employé"""
 
@@ -84,10 +158,10 @@ class EmployeDAO:
                     # Validation de la transaction pour rendre definitif les modifications
                     connection.commit()
                     # Retour
-                    return True
+                    return cursor.lastrowid
         except Error as e:
             print(f"Error while connecting to MySQL: {e}")
-            return False
+            return None
         
     def update_employe(self, id_employe, nom=None, prenom=None, email=None, telephone=None, date_embauche=None, id_agence=None):
         """Met à jour les informations d'un employé"""
@@ -96,33 +170,11 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete de mise à jour dynamique en fonction des paramètres fournis
-                    query = "UPDATE employe SET "
-                    values = []
-                    if nom is not None:
-                        query += "nom = %s, "
-                        values.append(nom)
-                    if prenom is not None:
-                        query += "prenom = %s, "
-                        values.append(prenom)
-                    if email is not None:
-                        query += "email = %s, "
-                        values.append(email)
-                    if telephone is not None:
-                        query += "telephone = %s, "
-                        values.append(telephone)
-                    if date_embauche is not None:
-                        query += "date_embauche = %s, "
-                        values.append(date_embauche)
-                    if id_agence is not None:
-                        query += "id_agence = %s, "
-                        values.append(id_agence)
-                    
-                    # Retirer la dernière virgule et ajouter la clause WHERE
-                    query = query.rstrip(", ") + " WHERE id_employe = %s"
-                    values.append(id_employe)
-
+                    query = "UPDATE employe SET nom = COALESCE(%s, nom), prenom = COALESCE(%s, prenom), email = COALESCE(%s, email), telephone = COALESCE(%s, telephone), date_embauche = COALESCE(%s, date_embauche), id_agence = COALESCE(%s, id_agence) WHERE id_employe = %s"
+                    # Parametres
+                    values = (nom, prenom, email, telephone, date_embauche, id_agence, id_employe)
                     # Execution de la requete avec les parametres
-                    cursor.execute(query, tuple(values))
+                    cursor.execute(query, values)
                     # Validation de la transaction pour rendre definitif les modifications
                     connection.commit()
                     # Retour du resultat

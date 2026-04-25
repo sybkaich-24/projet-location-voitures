@@ -2,6 +2,17 @@ import mysql.connector
 from mysql.connector import Error
 
 class Agent_d_agenceDAO:
+    """
+    Classe d'acces et de gestion des agents d'agence dans la base de données DAO
+
+    id_employe INT,
+    description_role TEXT,
+    salaire DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (id_employe),
+    FOREIGN KEY (id_employe) REFERENCES Employe(id_employe)
+
+    Herite de l'entite Employe
+    """
     def __init__(self, host, user, password, database):
         self.config = {
             'host': host,
@@ -105,7 +116,7 @@ class Agent_d_agenceDAO:
                     # Resultat
                     result = cursor.lastrowid
                     # Retour
-                    return result
+                    return cursor.lastrowid
         except Error as e:
             print(f"Error while connecting to MySQL: {e}")
             return None
@@ -117,20 +128,11 @@ class Agent_d_agenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "UPDATE agent_d_agence SET "
+                    query = "UPDATE agent_d_agence SET description_role = COALESCE(%s, description_role), salaire = COALESCE(%s, salaire) WHERE id_employe = %s"
                     # Parametres
-                    values = []
-                    if description_role is not None:
-                        query += "description_role = %s, "
-                        values.append(description_role)
-                    if salaire is not None:
-                        query += "salaire = %s, "
-                        values.append(salaire)
-                    query = query.rstrip(", ")  # Remove the trailing comma and space
-                    query += " WHERE id_employe = %s"
-                    values.append(id_employe)
+                    values = (description_role, salaire, id_employe)
                     # Execution 
-                    cursor.execute(query, tuple(values))
+                    cursor.execute(query, values)
                     # Commit pour sauvegarder les changements
                     connection.commit()
                     # Retour
