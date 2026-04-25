@@ -42,7 +42,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM location WHERE id_location = %s"
+                    query = "SELECT * FROM Location WHERE id_location = %s"
                     # Parametres
                     value = (id_location,)
                     # Execution 
@@ -62,7 +62,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM location"
+                    query = "SELECT * FROM Location"
                     # Execution 
                     cursor.execute(query)
                     # Resultat
@@ -80,7 +80,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_location FROM location WHERE id_reservation = %s"
+                    query = "SELECT id_location FROM Location WHERE id_reservation = %s"
                     # Parametres
                     value = (id_reservation,)
                     # Execution 
@@ -100,7 +100,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM location WHERE id_vehicule = %s"
+                    query = "SELECT * FROM Location WHERE id_vehicule = %s"
                     # Parametres
                     value = (id_vehicule,)
                     # Execution 
@@ -120,7 +120,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM location WHERE id_client = %s"
+                    query = "SELECT * FROM Location WHERE id_client = %s"
                     # Parametres
                     value = (id_client,)
                     # Execution 
@@ -140,7 +140,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM location WHERE id_agence_depart = %s"
+                    query = "SELECT * FROM Location WHERE id_agence_depart = %s"
                     # Parametres
                     value = (id_agence_depart,)
                     # Execution 
@@ -160,7 +160,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM location WHERE id_agence_retour = %s"
+                    query = "SELECT * FROM Location WHERE id_agence_retour = %s"
                     # Parametres
                     value = (id_agence_retour,)
                     # Execution 
@@ -180,7 +180,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM location WHERE statut_location = %s"
+                    query = "SELECT * FROM Location WHERE statut_location = %s"
                     # Parametres
                     value = (statut_location,)
                     # Execution 
@@ -200,7 +200,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "INSERT INTO location (date_debut, date_fin_prevue, date_retour_reelle, prix_total, statut_location, kilometrage_depart, kilometrage_retour, id_client, id_vehicule, id_reservation, id_agence_depart, id_agence_retour) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                    query = "INSERT INTO Location (date_debut, date_fin_prevue, date_retour_reelle, prix_total, statut_location, kilometrage_depart, kilometrage_retour, id_client, id_vehicule, id_reservation, id_agence_depart, id_agence_retour) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                     # Parametres
                     value = (date_debut, date_fin_prevue, None, prix_total, statut_location, kilometrage_depart, kilometrage_retour, id_client, id_vehicule, id_reservation, id_agence_depart, id_agence_retour)
                     # Execution 
@@ -220,7 +220,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requête de mise à jour
-                    query = "UPDATE location SET date_debut = COALESCE(%s, date_debut), date_fin_prevue = COALESCE(%s, date_fin_prevue), date_retour_reelle = COALESCE(%s, date_retour_reelle), prix_total = COALESCE(%s, prix_total), statut_location = COALESCE(%s, statut_location), kilometrage_depart = COALESCE(%s, kilometrage_depart), kilometrage_retour = COALESCE(%s, kilometrage_retour), id_client = COALESCE(%s, id_client), id_vehicule = COALESCE(%s, id_vehicule), id_reservation = COALESCE(%s, id_reservation), id_agence_depart = COALESCE(%s, id_agence_depart), id_agence_retour = COALESCE(%s, id_agence_retour) WHERE id_location = %s"
+                    query = "UPDATE Location SET date_debut = COALESCE(%s, date_debut), date_fin_prevue = COALESCE(%s, date_fin_prevue), date_retour_reelle = COALESCE(%s, date_retour_reelle), prix_total = COALESCE(%s, prix_total), statut_location = COALESCE(%s, statut_location), kilometrage_depart = COALESCE(%s, kilometrage_depart), kilometrage_retour = COALESCE(%s, kilometrage_retour), id_client = COALESCE(%s, id_client), id_vehicule = COALESCE(%s, id_vehicule), id_reservation = COALESCE(%s, id_reservation), id_agence_depart = COALESCE(%s, id_agence_depart), id_agence_retour = COALESCE(%s, id_agence_retour) WHERE id_location = %s"
                     # Parametres
                     values = (date_debut, date_fin_prevue, date_retour_reelle, prix_total, statut_location, kilometrage_depart, kilometrage_retour, id_client, id_vehicule, id_reservation, id_agence_depart, id_agence_retour, id_location)
                     # Execution 
@@ -240,7 +240,7 @@ class LocationDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "DELETE FROM location WHERE id_location = %s"
+                    query = "DELETE FROM Location WHERE id_location = %s"
                     # Parametres
                     value = (id_location,)
                     # Execution 

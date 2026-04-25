@@ -30,7 +30,7 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "SELECT * FROM agence WHERE id_agence = %s"
+                    query = "SELECT * FROM Agence WHERE id_agence = %s"
                     # Construction du tuple de parametres pour la requete
                     value = (id_agence,)
                     # Execution de la requete avec les parametres
@@ -50,7 +50,7 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete
-                    query = "SELECT * FROM agence"
+                    query = "SELECT * FROM Agence"
                     # Execution de la requete
                     cursor.execute(query)
                     # Récupération du resultat
@@ -68,7 +68,7 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "SELECT nom_agence FROM agence WHERE id_agence = %s"
+                    query = "SELECT nom_agence FROM Agence WHERE id_agence = %s"
                     # Construction du tuple de parametres pour la requete
                     value = (id_agence,)
                     # Execution de la requete avec les parametres
@@ -88,7 +88,7 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "SELECT adresse FROM agence WHERE id_agence = %s"
+                    query = "SELECT adresse FROM Agence WHERE id_agence = %s"
                     # Construction du tuple de parametres pour la requete
                     value = (id_agence,)
                     # Execution de la requete avec les parametres
@@ -108,7 +108,7 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "SELECT ville FROM agence WHERE id_agence = %s"
+                    query = "SELECT ville FROM Agence WHERE id_agence = %s"
                     # Construction du tuple de parametres pour la requete
                     value = (id_agence,)
                     # Execution de la requete avec les parametres
@@ -128,7 +128,7 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "SELECT * FROM agence WHERE ville = %s"
+                    query = "SELECT * FROM Agence WHERE ville = %s"
                     # Construction du tuple de parametres pour la requete
                     value = (ville,)
                     # Execution de la requete avec les parametres
@@ -148,7 +148,7 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "INSERT INTO agence (nom_agence, adresse, ville, code_postal, telephone) VALUES (%s, %s, %s, %s, %s)"
+                    query = "INSERT INTO Agence (nom_agence, adresse, ville, code_postal, telephone) VALUES (%s, %s, %s, %s, %s)"
                     # Construction du tuple de parametres pour la requete
                     values = (nom_agence, adresse, ville, code_postal, telephone)
                     # Execution de la requete avec les parametres
@@ -168,7 +168,7 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "UPDATE agence SET nom = COALESCE(%s, nom), adresse = COALESCE(%s, adresse), ville = COALESCE(%s, ville), code_postal = COALESCE(%s, code_postal), telephone = COALESCE(%s, telephone) WHERE id_agence = %s"
+                    query = "UPDATE Agence SET nom = COALESCE(%s, nom), adresse = COALESCE(%s, adresse), ville = COALESCE(%s, ville), code_postal = COALESCE(%s, code_postal), telephone = COALESCE(%s, telephone) WHERE id_agence = %s"
                     # Construction du tuple de parametres pour la requete
                     values = (nom, adresse, ville, code_postal, telephone, id_agence)
                     # Execution de la requete avec les parametres
@@ -188,7 +188,7 @@ class AgenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete avec utilisation de placeholerd pour éviter les injections SQL
-                    query = "DELETE FROM agence WHERE id_agence = %s"
+                    query = "DELETE FROM Agence WHERE id_agence = %s"
                     # Construction du tuple de parametres pour la requete
                     value = (id_agence,) # Il faut s'assurer que le tuple contient une virgule pour être considéré comme un tuple d'un seul élément
                     # Execution de la requete avec les parametres

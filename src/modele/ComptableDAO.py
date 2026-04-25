@@ -29,7 +29,7 @@ class ComptableDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM comptable WHERE id_employe = %s"
+                    query = "SELECT * FROM Comptable WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 
@@ -49,7 +49,7 @@ class ComptableDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM comptable"
+                    query = "SELECT * FROM Comptable"
                     # Execution 
                     cursor.execute(query)
                     # Resultat
@@ -67,7 +67,7 @@ class ComptableDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT salaire FROM comptable WHERE id_employe = %s"
+                    query = "SELECT salaire FROM Comptable WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 
@@ -87,7 +87,7 @@ class ComptableDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT description_role FROM comptable WHERE id_employe = %s"
+                    query = "SELECT description_role FROM Comptable WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 
@@ -107,7 +107,7 @@ class ComptableDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "INSERT INTO comptable (id_employe, description_role, salaire) VALUES (%s, %s, %s)"
+                    query = "INSERT INTO Comptable (id_employe, description_role, salaire) VALUES (%s, %s, %s)"
                     # Parametres
                     values = (id_employe, description_role, salaire)
                     # Execution 
@@ -127,7 +127,7 @@ class ComptableDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête
-                    query = "UPDATE comptable SET description_role = COALESCE(%s, description_role), salaire = COALESCE(%s, salaire) WHERE id_employe = %s"
+                    query = "UPDATE Comptable SET description_role = COALESCE(%s, description_role), salaire = COALESCE(%s, salaire) WHERE id_employe = %s"
                     # Parametres
                     values = (description_role, salaire, id_employe)
                     # Execution
@@ -147,7 +147,7 @@ class ComptableDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête
-                    query = "DELETE FROM comptable WHERE id_employe = %s"
+                    query = "DELETE FROM Comptable WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution

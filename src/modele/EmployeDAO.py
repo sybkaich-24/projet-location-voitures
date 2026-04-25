@@ -32,7 +32,7 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM employe WHERE id_employe = %s"
+                    query = "SELECT * FROM Employe WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 
@@ -52,7 +52,7 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_employe FROM employe WHERE email = %s"
+                    query = "SELECT id_employe FROM Employe WHERE email = %s"
                     # Parametres
                     value = (email,)
                     # Execution 
@@ -72,7 +72,7 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM employe"
+                    query = "SELECT * FROM Employe"
                     # Execution 
                     cursor.execute(query)
                     # Resultat
@@ -90,7 +90,7 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM employe WHERE id_agence = %s"
+                    query = "SELECT * FROM Employe WHERE id_agence = %s"
                     # Parametres
                     value = (id_agence,)
                     # Execution 
@@ -110,7 +110,7 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_employe FROM employe WHERE id_agence = %s"
+                    query = "SELECT id_employe FROM Employe WHERE id_agence = %s"
                     # Parametres
                     value = (id_agence,)
                     # Execution 
@@ -130,7 +130,7 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_agence FROM employe WHERE id_employe = %s"
+                    query = "SELECT id_agence FROM Employe WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 
@@ -150,7 +150,7 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "INSERT INTO employe (nom, prenom, email, telephone, date_embauche, id_agence) VALUES (%s, %s, %s, %s, %s, %s)"
+                    query = "INSERT INTO Employe (nom, prenom, email, telephone, date_embauche, id_agence) VALUES (%s, %s, %s, %s, %s, %s)"
                     # Parametres
                     values = (nom, prenom, email, telephone, date_embauche, id_agence)
                     # Execution 
@@ -170,7 +170,7 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete de mise à jour dynamique en fonction des paramètres fournis
-                    query = "UPDATE employe SET nom = COALESCE(%s, nom), prenom = COALESCE(%s, prenom), email = COALESCE(%s, email), telephone = COALESCE(%s, telephone), date_embauche = COALESCE(%s, date_embauche), id_agence = COALESCE(%s, id_agence) WHERE id_employe = %s"
+                    query = "UPDATE Employe SET nom = COALESCE(%s, nom), prenom = COALESCE(%s, prenom), email = COALESCE(%s, email), telephone = COALESCE(%s, telephone), date_embauche = COALESCE(%s, date_embauche), id_agence = COALESCE(%s, id_agence) WHERE id_employe = %s"
                     # Parametres
                     values = (nom, prenom, email, telephone, date_embauche, id_agence, id_employe)
                     # Execution de la requete avec les parametres
@@ -190,7 +190,7 @@ class EmployeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "DELETE FROM employe WHERE id_employe = %s"
+                    query = "DELETE FROM Employe WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 

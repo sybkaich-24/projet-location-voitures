@@ -30,7 +30,7 @@ class FraisSupplementaireDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM frais_supplementaires WHERE id_frais_supplementaires = %s"
+                    query = "SELECT * FROM FraisSupplementaires WHERE id_frais_supplementaires = %s"
                     # Parametres
                     value = (id_frais_supplementaires,)
                     # Execution 
@@ -50,7 +50,7 @@ class FraisSupplementaireDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM frais_supplementaires"
+                    query = "SELECT * FROM FraisSupplementaires"
                     # Execution 
                     cursor.execute(query)
                     # Resultat
@@ -68,7 +68,7 @@ class FraisSupplementaireDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT montant FROM frais_supplementaires WHERE id_frais_supplementaires = %s"
+                    query = "SELECT montant FROM FraisSupplementaires WHERE id_frais_supplementaires = %s"
                     # Parametres
                     value = (id_frais_supplementaires,)
                     # Execution 
@@ -88,7 +88,7 @@ class FraisSupplementaireDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT description FROM frais_supplementaires WHERE id_frais_supplementaires = %s"
+                    query = "SELECT description FROM FraisSupplementaires WHERE id_frais_supplementaires = %s"
                     # Parametres
                     value = (id_frais_supplementaires,)
                     # Execution 
@@ -108,7 +108,7 @@ class FraisSupplementaireDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "INSERT INTO frais_supplementaires (type_frais, montant, description, date_frais, id_location) VALUES (%s, %s, %s, %s, %s)"
+                    query = "INSERT INTO FraisSupplementaires (type_frais, montant, description, date_frais, id_location) VALUES (%s, %s, %s, %s, %s)"
                     # Parametres
                     values = (type_frais, montant, description, date_frais, id_location)
                     # Execution 
@@ -127,7 +127,7 @@ class FraisSupplementaireDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requête de mise à jour
-                    query = "UPDATE frais_supplementaires SET type_frais = COALESCE(%s, type_frais), montant = COALESCE(%s, montant), description = COALESCE(%s, description), date_frais = COALESCE(%s, date_frais), id_location = COALESCE(%s, id_location) WHERE id_frais_supplementaires = %s"
+                    query = "UPDATE FraisSupplementaires SET type_frais = COALESCE(%s, type_frais), montant = COALESCE(%s, montant), description = COALESCE(%s, description), date_frais = COALESCE(%s, date_frais), id_location = COALESCE(%s, id_location) WHERE id_frais_supplementaires = %s"
                     # Parametres
                     values = (type_frais, montant, description, date_frais, id_location, id_frais_supplementaires)
                     # Execution 
@@ -146,7 +146,7 @@ class FraisSupplementaireDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "DELETE FROM frais_supplementaires WHERE id_frais_supplementaires = %s"
+                    query = "DELETE FROM FraisSupplementaires WHERE id_frais_supplementaires = %s"
                     # Parametres
                     value = (id_frais_supplementaires,)
                     # Execution 

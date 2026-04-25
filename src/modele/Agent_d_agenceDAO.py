@@ -29,7 +29,7 @@ class Agent_d_agenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM agent_d_agence WHERE id_employe = %s"
+                    query = "SELECT * FROM Agent_d_agence WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 
@@ -49,7 +49,7 @@ class Agent_d_agenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM agent_d_agence"
+                    query = "SELECT * FROM Agent_d_agence"
                     # Execution 
                     cursor.execute(query)
                     # Resultat
@@ -67,7 +67,7 @@ class Agent_d_agenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT salaire FROM agent_d_agence WHERE id_employe = %s"
+                    query = "SELECT salaire FROM Agent_d_agence WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 
@@ -87,7 +87,7 @@ class Agent_d_agenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT description_role FROM agent_d_agence WHERE id_employe = %s"
+                    query = "SELECT description_role FROM Agent_d_agence WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 
@@ -107,7 +107,7 @@ class Agent_d_agenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "INSERT INTO agent_d_agence (id_employe, description_role, salaire) VALUES (%s, %s, %s)"
+                    query = "INSERT INTO Agent_d_agence (id_employe, description_role, salaire) VALUES (%s, %s, %s)"
                     # Parametres
                     values = (id_employe, description_role, salaire)
                     # Execution 
@@ -128,7 +128,7 @@ class Agent_d_agenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "UPDATE agent_d_agence SET description_role = COALESCE(%s, description_role), salaire = COALESCE(%s, salaire) WHERE id_employe = %s"
+                    query = "UPDATE Agent_d_agence SET description_role = COALESCE(%s, description_role), salaire = COALESCE(%s, salaire) WHERE id_employe = %s"
                     # Parametres
                     values = (description_role, salaire, id_employe)
                     # Execution 
@@ -148,7 +148,7 @@ class Agent_d_agenceDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "DELETE FROM agent_d_agence WHERE id_employe = %s"
+                    query = "DELETE FROM Agent_d_agence WHERE id_employe = %s"
                     # Parametres
                     value = (id_employe,)
                     # Execution 

@@ -30,7 +30,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM paiement WHERE id_paiement = %s"
+                    query = "SELECT * FROM Paiement WHERE id_paiement = %s"
                     # Parametres
                     value = (id_paiement,)
                     # Execution 
@@ -50,7 +50,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_paiement FROM paiement WHERE id_location = %s"
+                    query = "SELECT id_paiement FROM Paiement WHERE id_location = %s"
                     # Parametres
                     value = (id_location,)
                     # Execution 
@@ -71,7 +71,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM paiement"
+                    query = "SELECT * FROM Paiement"
                     # Execution 
                     cursor.execute(query)
                     # Resultat
@@ -89,7 +89,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM paiement WHERE id_location = %s"
+                    query = "SELECT * FROM Paiement WHERE id_location = %s"
                     # Parametres
                     value = (id_location,)
                     # Execution 
@@ -109,7 +109,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT statut_paiement FROM paiement WHERE id_paiement = %s"
+                    query = "SELECT statut_paiement FROM Paiement WHERE id_paiement = %s"
                     # Parametres
                     value = (id_paiement,)
                     # Execution 
@@ -129,7 +129,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT moyen_paiement FROM paiement WHERE id_paiement = %s"
+                    query = "SELECT moyen_paiement FROM Paiement WHERE id_paiement = %s"
                     # Parametres
                     value = (id_paiement,)
                     # Execution 
@@ -149,7 +149,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT montant FROM paiement WHERE id_paiement = %s"
+                    query = "SELECT montant FROM Paiement WHERE id_paiement = %s"
                     # Parametres
                     value = (id_paiement,)
                     # Execution 
@@ -169,7 +169,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "INSERT INTO paiement (date_paiement, montant, moyen_paiement, statut_paiement, id_location) VALUES (%s, %s, %s, %s, %s)"
+                    query = "INSERT INTO Paiement (date_paiement, montant, moyen_paiement, statut_paiement, id_location) VALUES (%s, %s, %s, %s, %s)"
                     # Parametres
                     values = (date_paiement, montant, moyen_paiement, statut_paiement, id_location)
                     # Execution 
@@ -188,7 +188,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "UPDATE paiement SET date_paiement = COALESCE(%s, date_paiement), montant = COALESCE(%s, montant), moyen_paiement = COALESCE(%s, moyen_paiement), statut_paiement = COALESCE(%s, statut_paiement) WHERE id_paiement = %s"
+                    query = "UPDATE Paiement SET date_paiement = COALESCE(%s, date_paiement), montant = COALESCE(%s, montant), moyen_paiement = COALESCE(%s, moyen_paiement), statut_paiement = COALESCE(%s, statut_paiement) WHERE id_paiement = %s"
                     # Parametres
                     values = (date_paiement, montant, moyen_paiement, statut_paiement, id_paiement)
                     # Execution 
@@ -210,7 +210,7 @@ class PaiementDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "DELETE FROM paiement WHERE id_paiement = %s"
+                    query = "DELETE FROM Paiement WHERE id_paiement = %s"
                     # Parametres
                     value = (id_paiement,)
                     # Execution 

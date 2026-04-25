@@ -28,7 +28,7 @@ class CategorieVehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM categorie_vehicule WHERE id_categorie = %s"
+                    query = "SELECT * FROM CategorieVehicule WHERE id_categorie = %s"
                     # Parametres
                     value = (id_categorie,)
                     # Execution 
@@ -48,7 +48,7 @@ class CategorieVehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_categorie FROM categorie_vehicule WHERE nom = %s"
+                    query = "SELECT id_categorie FROM CategorieVehicule WHERE nom = %s"
                     # Parametres
                     value = (nom,)
                     # Execution 
@@ -68,7 +68,7 @@ class CategorieVehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM categorie_vehicule"
+                    query = "SELECT * FROM CategorieVehicule"
                     # Execution 
                     cursor.execute(query)
                     # Resultat
@@ -86,7 +86,7 @@ class CategorieVehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT description FROM categorie_vehicule WHERE id_categorie = %s"
+                    query = "SELECT description FROM CategorieVehicule WHERE id_categorie = %s"
                     # Parametres
                     value = (id_categorie,)
                     # Execution 
@@ -106,7 +106,7 @@ class CategorieVehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT tarif_base FROM categorie_vehicule WHERE id_categorie = %s"
+                    query = "SELECT tarif_base FROM CategorieVehicule WHERE id_categorie = %s"
                     # Parametres
                     value = (id_categorie,)
                     # Execution 
@@ -126,7 +126,7 @@ class CategorieVehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "INSERT INTO categorie_vehicule (nom, description, tarif_base) VALUES (%s, %s, %s)"
+                    query = "INSERT INTO CategorieVehicule (nom, description, tarif_base) VALUES (%s, %s, %s)"
                     # Parametres
                     values = (nom, description, tarif_base)
                     # Execution 
@@ -146,7 +146,7 @@ class CategorieVehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "UPDATE categorie_vehicule SET nom = COALESCE(%s, nom), description = COALESCE(%s, description), tarif_base = COALESCE(%s, tarif_base) WHERE id_categorie = %s"
+                    query = "UPDATE CategorieVehicule SET nom = COALESCE(%s, nom), description = COALESCE(%s, description), tarif_base = COALESCE(%s, tarif_base) WHERE id_categorie = %s"
                     # Parametres
                     values = (nom, description, tarif_base, id_categorie)
                     # Execution 
@@ -166,7 +166,7 @@ class CategorieVehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "DELETE FROM categorie_vehicule WHERE id_categorie = %s"
+                    query = "DELETE FROM CategorieVehicule WHERE id_categorie = %s"
                     # Parametres
                     value = (id_categorie,)
                     # Execution 

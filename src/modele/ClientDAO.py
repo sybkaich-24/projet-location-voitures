@@ -34,7 +34,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM client WHERE id_client = %s"
+                    query = "SELECT * FROM Client WHERE id_client = %s"
                     # Parametres
                     value = (id_client,)
                     # Execution 
@@ -54,7 +54,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_client FROM client WHERE email = %s"
+                    query = "SELECT id_client FROM Client WHERE email = %s"
                     # Parametres
                     value = (email,)
                     # Execution 
@@ -74,7 +74,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_client FROM client WHERE numero_permis = %s"
+                    query = "SELECT id_client FROM Client WHERE numero_permis = %s"
                     # Parametres
                     value = (numero_permis,)
                     # Execution 
@@ -94,7 +94,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM client"
+                    query = "SELECT * FROM Client"
                     # Execution 
                     cursor.execute(query)
                     # Resultat
@@ -112,7 +112,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT est_anonymise FROM client WHERE id_client = %s"
+                    query = "SELECT est_anonymise FROM Client WHERE id_client = %s"
                     # Parametres
                     value = (id_client,)
                     # Execution 
@@ -132,7 +132,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT numero_permis FROM client WHERE id_client = %s"
+                    query = "SELECT numero_permis FROM Client WHERE id_client = %s"
                     # Parametres
                     value = (id_client,)
                     # Execution 
@@ -152,7 +152,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "INSERT INTO client (nom, prenom, email, telephone, numero_permis, date_inscription) VALUES (%s, %s, %s, %s, %s, NOW())"
+                    query = "INSERT INTO Client (nom, prenom, email, telephone, numero_permis, date_inscription) VALUES (%s, %s, %s, %s, %s, NOW())"
                     # Parametres
                     values = (nom, prenom, email, telephone, numero_permis)
                     # Execution 
@@ -172,7 +172,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Construction de la requete de mise à jour avec les champs à mettre à jour
-                    query = "UPDATE client SET nom = COALESCE(%s, nom), prenom = COALESCE(%s, prenom), email = COALESCE(%s, email), telephone = COALESCE(%s, telephone), numero_permis = COALESCE(%s, numero_permis) WHERE id_client = %s"
+                    query = "UPDATE Client SET nom = COALESCE(%s, nom), prenom = COALESCE(%s, prenom), email = COALESCE(%s, email), telephone = COALESCE(%s, telephone), numero_permis = COALESCE(%s, numero_permis) WHERE id_client = %s"
                     # Parametres
                     values = (nom, prenom, email, telephone, numero_permis, id_client)
                     # Execution de la requete avec les parametres
@@ -192,7 +192,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "UPDATE client SET nom = 'Anonyme', prenom = 'Anonyme', email = NULL, telephone = NULL, numero_permis = NULL, date_desinscription = NOW() WHERE id_client = %s"
+                    query = "UPDATE Client SET nom = 'Anonyme', prenom = 'Anonyme', email = NULL, telephone = NULL, numero_permis = NULL, date_desinscription = NOW() WHERE id_client = %s"
                     # Parametres
                     value = (id_client,)
                     # Execution 
@@ -212,7 +212,7 @@ class ClientDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "DELETE FROM client WHERE id_client = %s"
+                    query = "DELETE FROM Client WHERE id_client = %s"
                     # Parametres
                     value = (id_client,)
                     # Execution 

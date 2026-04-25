@@ -36,7 +36,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM vehicule WHERE id_vehicule = %s"
+                    query = "SELECT * FROM Vehicule WHERE id_vehicule = %s"
                     # Parametres
                     value = (id_vehicule,)
                     # Execution 
@@ -56,7 +56,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM vehicule WHERE immatriculation = %s"
+                    query = "SELECT * FROM Vehicule WHERE immatriculation = %s"
                     # Parametres
                     value = (immatriculation,)
                     # Execution 
@@ -76,7 +76,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_vehicule FROM vehicule WHERE immatriculation = %s"
+                    query = "SELECT id_vehicule FROM Vehicule WHERE immatriculation = %s"
                     # Parametres
                     value = (immatriculation,)
                     # Execution 
@@ -96,7 +96,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM vehicule"
+                    query = "SELECT * FROM Vehicule"
                     # Execution 
                     cursor.execute(query)
                     # Resultat
@@ -114,7 +114,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM vehicule WHERE id_agence = %s AND etat_vehicule = 'disponible'"
+                    query = "SELECT * FROM Vehicule WHERE id_agence = %s AND etat_vehicule = 'disponible'"
                     # Parametres
                     value = (id_agence,)
                     # Execution 
@@ -134,7 +134,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM vehicule WHERE id_categorie = %s AND etat_vehicule = 'disponible'"
+                    query = "SELECT * FROM Vehicule WHERE id_categorie = %s AND etat_vehicule = 'disponible'"
                     # Parametres
                     value = (id_categorie,)
                     # Execution 
@@ -154,7 +154,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM vehicule WHERE modele = %s AND etat_vehicule = 'disponible'"
+                    query = "SELECT * FROM Vehicule WHERE modele = %s AND etat_vehicule = 'disponible'"
                     # Parametres
                     value = (modele,)
                     # Execution 
@@ -174,7 +174,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM vehicule WHERE marque = %s AND etat_vehicule = 'disponible'"
+                    query = "SELECT * FROM Vehicule WHERE marque = %s AND etat_vehicule = 'disponible'"
                     # Parametres
                     value = (marque,)
                     # Execution 
@@ -194,7 +194,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM vehicule WHERE tarif_journalier <= %s AND etat_vehicule = 'disponible'"
+                    query = "SELECT * FROM Vehicule WHERE tarif_journalier <= %s AND etat_vehicule = 'disponible'"
                     # Parametres
                     value = (tarif_max,)
                     # Execution 
@@ -214,7 +214,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT * FROM vehicule WHERE kilometrage_actuel <= %s AND etat_vehicule = 'disponible'"
+                    query = "SELECT * FROM Vehicule WHERE kilometrage_actuel <= %s AND etat_vehicule = 'disponible'"
                     # Parametres
                     value = (kilometrage_max,)
                     # Execution 
@@ -234,7 +234,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT etat_vehicule FROM vehicule WHERE id_vehicule = %s"
+                    query = "SELECT etat_vehicule FROM Vehicule WHERE id_vehicule = %s"
                     # Parametres
                     value = (id_vehicule,)
                     # Execution 
@@ -254,7 +254,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor(dictionary=True) as cursor:
                     # Requête 
-                    query = "SELECT tarif_journalier FROM vehicule WHERE id_vehicule = %s"
+                    query = "SELECT tarif_journalier FROM Vehicule WHERE id_vehicule = %s"
                     # Parametres
                     value = (id_vehicule,)
                     # Execution 
@@ -274,7 +274,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT kilometrage_actuel FROM vehicule WHERE id_vehicule = %s"
+                    query = "SELECT kilometrage_actuel FROM Vehicule WHERE id_vehicule = %s"
                     # Parametres
                     value = (id_vehicule,)
                     # Execution 
@@ -294,7 +294,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_categorie FROM vehicule WHERE id_vehicule = %s"
+                    query = "SELECT id_categorie FROM Vehicule WHERE id_vehicule = %s"
                     # Parametres
                     value = (id_vehicule,)
                     # Execution 
@@ -314,7 +314,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "SELECT id_agence FROM vehicule WHERE id_vehicule = %s"
+                    query = "SELECT id_agence FROM Vehicule WHERE id_vehicule = %s"
                     # Parametres
                     value = (id_vehicule,)
                     # Execution 
@@ -334,7 +334,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "INSERT INTO vehicule (immatriculation, marque, modele, annee, kilometrage_actuel, etat_vehicule, tarif_journalier, id_categorie, id_agence) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                    query = "INSERT INTO Vehicule (immatriculation, marque, modele, annee, kilometrage_actuel, etat_vehicule, tarif_journalier, id_categorie, id_agence) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
                     # Parametres
                     values = (immatriculation, marque, modele, annee, kilometrage_actuel, etat_vehicule, tarif_journalier, id_categorie, id_agence)
                     # Execution 
@@ -354,7 +354,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "UPDATE vehicule SET immatriculation = COALESCE(%s, immatriculation), marque = COALESCE(%s, marque), modele = COALESCE(%s, modele), annee = COALESCE(%s, annee), kilometrage_actuel = COALESCE(%s, kilometrage_actuel), etat_vehicule = COALESCE(%s, etat_vehicule), tarif_journalier = COALESCE(%s, tarif_journalier), id_categorie = COALESCE(%s, id_categorie), id_agence = COALESCE(%s, id_agence) WHERE id_vehicule = %s"
+                    query = "UPDATE Vehicule SET immatriculation = COALESCE(%s, immatriculation), marque = COALESCE(%s, marque), modele = COALESCE(%s, modele), annee = COALESCE(%s, annee), kilometrage_actuel = COALESCE(%s, kilometrage_actuel), etat_vehicule = COALESCE(%s, etat_vehicule), tarif_journalier = COALESCE(%s, tarif_journalier), id_categorie = COALESCE(%s, id_categorie), id_agence = COALESCE(%s, id_agence) WHERE id_vehicule = %s"
                     # Parametres
                     values = (immatriculation, marque, modele, annee, kilometrage_actuel, etat_vehicule, tarif_journalier, id_categorie, id_agence, id_vehicule)
                     # Execution 
@@ -374,7 +374,7 @@ class VehiculeDAO:
             with mysql.connector.connect(**self.config) as connection:
                 with connection.cursor() as cursor:
                     # Requête 
-                    query = "DELETE FROM vehicule WHERE id_vehicule = %s"
+                    query = "DELETE FROM Vehicule WHERE id_vehicule = %s"
                     # Parametres
                     value = (id_vehicule,)
                     # Execution 
