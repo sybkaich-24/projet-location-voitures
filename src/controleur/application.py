@@ -13,6 +13,7 @@ from modele.ReservationDAO import ReservationDAO
 from modele.VehiculeDAO import VehiculeDAO
 
 from datetime import date
+from decimal import Decimal
 
 class Application:
     def __init__(self):
@@ -91,7 +92,25 @@ class Application:
                     # Calcule du nombre de jours
                     nb_jours = days_between(date_debut, date_fin)
                     # Prix total de la location
-                    prix_journalier = self.vehicule_dao.get_tarif_journalier_vehicule_by_id(id_vehicule)
+                    
+                    tarif_row = self.vehicule_dao.get_tarif_journalier_vehicule_by_id(id_vehicule)
+                    if isinstance(tarif_row, dict):
+                        tarif_value = tarif_row.get("tarif_journalier")
+                    elif isinstance(tarif_row, (tuple, list)) and len(tarif_row) > 0:
+                        tarif_value = tarif_row[0]
+                    else:
+                        tarif_value = None
+
+                    if tarif_value is None:
+                        self.vue.display_invalid_option_message()
+                        continue
+
+                    if isinstance(tarif_value, (int, float, Decimal, str, bytes)):
+                        prix_journalier = float(tarif_value)
+                    else:
+                        self.vue.display_invalid_option_message()
+                        continue
+                    
                     prix_total = nb_jours * prix_journalier
                     # Récupération du moyen de paiement et le montant choisi
                     moyen_paiement, montant = self.vue.get_payment_infos()
