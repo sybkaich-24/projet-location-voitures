@@ -18,18 +18,18 @@ from decimal import Decimal
 class Application:
     def __init__(self):
         self.vue = VueTerminal()
-        self.agence_dao = AgenceDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.agent_d_agence_dao = Agent_d_agenceDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.categorie_vehicule_dao = CategorieVehiculeDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.client_dao = ClientDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.comptable_dao = ComptableDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.employe_dao = EmployeDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.frais_supplementaire_dao = FraisSupplementaireDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.location_dao = LocationDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.paiement_dao = PaiementDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.vue_dao = VueDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.reservation_dao = ReservationDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
-        self.vehicule_dao = VehiculeDAO(host='localhost', user='root', password='password', database='location_voitures', port=3307)
+        self.agence_dao = AgenceDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.agent_d_agence_dao = Agent_d_agenceDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.categorie_vehicule_dao = CategorieVehiculeDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.client_dao = ClientDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.comptable_dao = ComptableDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.employe_dao = EmployeDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.frais_supplementaire_dao = FraisSupplementaireDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.location_dao = LocationDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.paiement_dao = PaiementDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.vue_dao = VueDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.reservation_dao = ReservationDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
+        self.vehicule_dao = VehiculeDAO(host='localhost', user='root', password='root123', database='location_voitures', port=3307)
 
     def run(self):
         """Est appeler en premier pour demarer l'app, celle ci appele la methode adequate de la vue pour afficher la page d'acceuil"""
@@ -92,7 +92,7 @@ class Application:
                     # Calcule du nombre de jours
                     nb_jours = days_between(date_debut, date_fin)
                     # Prix total de la location
-                    
+
                     tarif_row = self.vehicule_dao.get_tarif_journalier_vehicule_by_id(id_vehicule)
                     if isinstance(tarif_row, dict):
                         tarif_value = tarif_row.get("tarif_journalier")
