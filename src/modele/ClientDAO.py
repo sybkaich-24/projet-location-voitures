@@ -18,13 +18,13 @@ class ClientDAO:
     UNIQUE (email),
     UNIQUE (numero_permis)
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port):
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database,
-            'port': 3307 
+            'port': port
         }
 
     def get_client_by_id(self, id_client):
@@ -165,25 +165,25 @@ class ClientDAO:
             print(f"Error while connecting to MySQL: {e}")
             return False
         
-        def update_client(self, id_client, nom=None, prenom=None, email=None, telephone=None, numero_permis=None):
-            """Met à jour un client"""
+    def update_client(self, id_client, nom=None, prenom=None, email=None, telephone=None, numero_permis=None):
+        """Met à jour un client"""
 
-            try:
-                with mysql.connector.connect(**self.config) as connection:
-                    with connection.cursor() as cursor:
-                        # Construction de la requete de mise à jour avec les champs à mettre à jour
-                        query = "UPDATE client SET nom = COALESCE(%s, nom), prenom = COALESCE(%s, prenom), email = COALESCE(%s, email), telephone = COALESCE(%s, telephone), numero_permis = COALESCE(%s, numero_permis) WHERE id_client = %s"
-                        # Parametres
-                        values = (nom, prenom, email, telephone, numero_permis, id_client)
-                        # Execution de la requete avec les parametres
-                        cursor.execute(query, values)
-                        # Commit des changements
-                        connection.commit()
-                        # Retour 
-                        return cursor.lastrowid
-            except Error as e:
-                print(f"Error while connecting to MySQL: {e}")
-                return None
+        try:
+            with mysql.connector.connect(**self.config) as connection:
+                with connection.cursor() as cursor:
+                    # Construction de la requete de mise à jour avec les champs à mettre à jour
+                    query = "UPDATE client SET nom = COALESCE(%s, nom), prenom = COALESCE(%s, prenom), email = COALESCE(%s, email), telephone = COALESCE(%s, telephone), numero_permis = COALESCE(%s, numero_permis) WHERE id_client = %s"
+                    # Parametres
+                    values = (nom, prenom, email, telephone, numero_permis, id_client)
+                    # Execution de la requete avec les parametres
+                    cursor.execute(query, values)
+                    # Commit des changements
+                    connection.commit()
+                    # Retour 
+                    return cursor.lastrowid
+        except Error as e:
+            print(f"Error while connecting to MySQL: {e}")
+            return None
             
     def desinscription_client_by_id(self, id_client):
         """Désinscrit un client en le rendant anonyme et en changant sa date de désinscription"""

@@ -13,13 +13,13 @@ class AgenceDAO:
     telephone VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_agence)
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port):
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database,
-            'port': 3307 # Il faut s'assurer que le port de docker est le meme 
+            'port': port # Il faut s'assurer que le port de docker est le meme 
         }
 
     def get_agence_by_id(self, id_agence):

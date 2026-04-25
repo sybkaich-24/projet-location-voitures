@@ -1,6 +1,8 @@
 import mysql.connector
 from mysql.connector import Error
 
+from datetime import datetime
+
 class ReservationDAO:
     """
     Classe d'acces et de gestion des réservations dans la base de données DAO
@@ -18,13 +20,13 @@ class ReservationDAO:
     FOREIGN KEY (id_vehicule) REFERENCES Vehicule(id_vehicule),
     FOREIGN KEY (id_categorie) REFERENCES CategorieVehicule(id_categorie)
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port):
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database,
-            'port': 3307 # Il faut s'assurer que le port de docker est le meme 
+            'port': port # Il faut s'assurer que le port de docker est le meme
         }
 
     def get_reservation_by_id(self, id_reservation):
@@ -265,7 +267,7 @@ class ReservationDAO:
             print(f"Error while connecting to MySQL: {e}")
             return None
         
-    def create_reservation(self, date_reservation, date_debut, date_fin_prevue, statut_reservation, id_client, id_vehicule=None, id_categorie=None):
+    def create_reservation(self, date_debut, date_fin_prevue, statut_reservation, id_client, id_vehicule=None, id_categorie=None):
         """Crée une nouvelle réservation"""
 
         try:
@@ -274,7 +276,7 @@ class ReservationDAO:
                     # Requête 
                     query = "INSERT INTO reservation (date_reservation, date_debut, date_fin_prevue, statut_reservation, id_client, id_vehicule, id_categorie) VALUES (%s, %s, %s, %s, %s, %s, %s)"
                     # Parametres
-                    values = (date_reservation, date_debut, date_fin_prevue, statut_reservation, id_client, id_vehicule, id_categorie)
+                    values = (datetime.now().strftime('%Y-%m-%d'), date_debut, date_fin_prevue, statut_reservation, id_client, id_vehicule, id_categorie)
                     # Execution 
                     cursor.execute(query, values)
                     # Commit pour sauvegarder les changements

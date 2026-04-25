@@ -14,13 +14,13 @@ class FraisSupplementaireDAO:
     PRIMARY KEY (id_frais),
     FOREIGN KEY (id_location) REFERENCES Location(id_location)
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port):
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database,
-            'port': 3307 # Il faut s'assurer que le port de docker est le meme 
+            'port': port # Il faut s'assurer que le port de docker est le meme 
         }
 
     def get_frais_supplementaires_by_id(self, id_frais_supplementaires):

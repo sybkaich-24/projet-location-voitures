@@ -20,13 +20,13 @@ class VehiculeDAO:
     FOREIGN KEY (id_categorie) REFERENCES CategorieVehicule(id_categorie),
     FOREIGN KEY (id_agence) REFERENCES Agence(id_agence)
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port):
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database,
-            'port': 3307 # Il faut s'assurer que le port de docker est le meme 
+            'port': port # Il faut s'assurer que le port de docker est le meme 
         }
 
     def get_vehicule_by_id(self, id_vehicule):
@@ -252,7 +252,7 @@ class VehiculeDAO:
 
         try:
             with mysql.connector.connect(**self.config) as connection:
-                with connection.cursor() as cursor:
+                with connection.cursor(dictionary=True) as cursor:
                     # Requête 
                     query = "SELECT tarif_journalier FROM vehicule WHERE id_vehicule = %s"
                     # Parametres

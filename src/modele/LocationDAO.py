@@ -26,13 +26,13 @@ class LocationDAO:
     FOREIGN KEY (id_agence_depart) REFERENCES Agence(id_agence),
     FOREIGN KEY (id_agence_retour) REFERENCES Agence(id_agence)
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port):
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database,
-            'port': 3307 # Il faut s'assurer que le port de docker est le meme 
+            'port': port # Il faut s'assurer que le port de docker est le meme 
         }
         
     def get_location_by_id(self, id_location):
@@ -193,7 +193,7 @@ class LocationDAO:
             print(f"Error while connecting to MySQL: {e}")
             return None
         
-    def create_location(self, date_debut, date_fin_prevue, date_retour_reelle, prix_total, statut_location, kilometrage_depart, kilometrage_retour, id_client, id_vehicule, id_reservation, id_agence_depart, id_agence_retour):
+    def create_location(self, date_debut, date_fin_prevue, prix_total, statut_location, kilometrage_depart, kilometrage_retour, id_client, id_vehicule, id_reservation, id_agence_depart, id_agence_retour):
         """Crée une nouvelle location"""
 
         try:
@@ -202,7 +202,7 @@ class LocationDAO:
                     # Requête 
                     query = "INSERT INTO location (date_debut, date_fin_prevue, date_retour_reelle, prix_total, statut_location, kilometrage_depart, kilometrage_retour, id_client, id_vehicule, id_reservation, id_agence_depart, id_agence_retour) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                     # Parametres
-                    value = (date_debut, date_fin_prevue, date_retour_reelle, prix_total, statut_location, kilometrage_depart, kilometrage_retour, id_client, id_vehicule, id_reservation, id_agence_depart, id_agence_retour)
+                    value = (date_debut, date_fin_prevue, None, prix_total, statut_location, kilometrage_depart, kilometrage_retour, id_client, id_vehicule, id_reservation, id_agence_depart, id_agence_retour)
                     # Execution 
                     cursor.execute(query, value)
                     # Commit pour sauvegarder les changements

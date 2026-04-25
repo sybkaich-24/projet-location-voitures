@@ -13,13 +13,13 @@ class Agent_d_agenceDAO:
 
     Herite de l'entite Employe
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port):
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database,
-            'port': 3307 
+            'port': port
         }
 
     def get_agent_d_agence_by_id(self, id_employe):

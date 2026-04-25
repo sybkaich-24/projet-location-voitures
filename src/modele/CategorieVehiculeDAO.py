@@ -12,13 +12,13 @@ class CategorieVehiculeDAO:
     PRIMARY KEY (id_categorie),
     UNIQUE (nom_categorie)
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port):
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database,
-            'port': 3307 
+            'port': port
         }
     
     def get_categorie_vehicule_by_id(self, id_categorie):

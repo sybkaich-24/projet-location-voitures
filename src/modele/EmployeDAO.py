@@ -16,13 +16,13 @@ class EmployeDAO:
     UNIQUE (email),
     FOREIGN KEY (id_agence) REFERENCES Agence(id_agence)
     """
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, port):
         self.config = {
             'host': host,
             'user': user,
             'password': password,
             'database': database,
-            'port': 3307 # Il faut s'assurer que le port de docker est le meme 
+            'port': port # Il faut s'assurer que le port de docker est le meme 
         }
 
     def get_employe_by_id(self, id_employe):

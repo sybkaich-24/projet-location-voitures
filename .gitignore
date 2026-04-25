@@ -2,3 +2,6 @@
 /.sixth
 /.vscode
 /.idea
+/src/modele/__pycache__
+/src/controleur/__pycache__
+/src/vue/__pycache__
