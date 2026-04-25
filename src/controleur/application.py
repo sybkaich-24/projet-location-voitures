@@ -56,7 +56,8 @@ class Application:
                 case '1': 
                     # Inscription
                     client_data = self.vue.sing_up_client()
-                    self.client_dao.create_client(**client_data)
+                    result = self.client_dao.create_client(**client_data)
+                    self.vue.sign_up_validation_message(result)
                 case '2':
                     # Informations personnelles
                     email = self.vue.get_email_client()
@@ -66,12 +67,14 @@ class Application:
                 case '3':
                     # Modifier les informations personnelles
                     client_data = self.vue.sing_up_client()
-                    self.client_dao.update_client(**client_data)
+                    result = self.client_dao.update_client(**client_data)
+                    self.vue.sign_up_validation_message(result)
                 case '4':
                     # Désinscription
                     email = self.vue.get_email_client()
                     id_client = self.client_dao.get_id_client_by_email(email)
-                    self.client_dao.desinscription_client_by_id(id_client)
+                    result = self.client_dao.desinscription_client_by_id(id_client)
+                    self.vue.is_desinscription_confirmed(result)
                 case '5':
                     # Louer une voiture
                     """

@@ -75,6 +75,13 @@ class VueTerminal:
             'numero_permis': numero_permis
         }
     
+    def sign_up_validation_message(self, valid):
+        """Affiche un message de validation ou d'erreur après l'inscription ou la modification des informations personnelles d'un client"""
+        if valid:
+            print("Votre inscription/modification a été réussie. Merci pour votre confiance!")
+        else:
+            print("Votre inscription/modification a échoué. Une erreur s'est produite, veuillez réessayer.")
+    
     def get_email_client(self):
         """Récupère l'email du client dans le but de récupérer ses informations personnelles ou de les modifier ou de procéder à sa désinscription"""
         print("=== Informations personnelles ===")
